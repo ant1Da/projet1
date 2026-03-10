@@ -1,11 +1,11 @@
 ﻿using System.Data.Common;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace Projet_1;
 class Student 
 {
-    public int nextId { get; set;}
     public int id {get; set;}
     public string name {get; set;}
     public float average {get; set;}
@@ -25,8 +25,30 @@ class Student
         id++;
     }
 }
+class Course
+{
+    public int id {get; set;}
+    public string name {get; set;}
+    public float credits {get; set;}
+    public bool isMandatory {get; set;}
+    public List<Student> Students {get; set;}
+    public Course (string name)
+    {
+        this.name = name;
+        id++;
+    }
+    public Course (string name, float credits, bool isMandatory, List<Student> Students)
+    {
+        this.name = name;
+        this.credits = credits;
+        this.isMandatory = isMandatory;
+        this.Students = Students;
+        id++;
+    }
+}
 class Program
 {
+    // PARTIE students
     static void Main(string[] args)
     {
         static void DisplayStudent(Student s)
@@ -41,7 +63,6 @@ class Program
                 DisplayStudent(s);
             }
         }
-
         Student s1 = new Student("Alice", 12, true);
         Student s2 = new Student("Bernard", 11, false);
         Student s3 = new Student("Emma", 18, true);
@@ -54,6 +75,45 @@ class Program
         ListeEleves.Add(s4);
         ListeEleves.Add(s5);
         DisplayStudents(ListeEleves);
-        Console.WriteLine("Hello, World!");
+
+        // PARTIE course
+        static void DisplayCourse(Course c)
+        {
+            if (c.isMandatory)
+            {
+                Console.WriteLine($"Le cours obligatoire de {c.name} a {c.credits} crédit(s) sera attendu par {c.Students.Count} élève(s).");
+            }
+            else
+            {
+                Console.WriteLine($"Le cours de {c.name} a {c.credits} crédit(s) sera attendu par {c.Students.Count} élève(s).");
+            }
+        }
+        static void DisplayCourseStudents(Course c)
+        {
+            DisplayCourse(c);
+            Console.WriteLine("Liste élèves :");
+            DisplayStudents(c.Students);
+            Console.WriteLine("\n");
+        }
+
+        List<Student> ElevesCourse = new List<Student>();
+        Course Math = new Course("Mathématiques", 3, true, new List<Student>());
+        Course Info = new Course("Informatique", 5, false, new List<Student>());
+        Course Eng = new Course("Anglais", 1, false, new List<Student>());
+        Course Hist = new Course("Histoire", 1, false, new List<Student>());
+
+        Math.Students.Add(s1);
+        Math.Students.Add(s2);
+        Math.Students.Add(s3);
+        Info.Students.Add(s2);
+        Info.Students.Add(s4);
+        Eng.Students.Add(s1);
+        Eng.Students.Add(s5);
+        Hist.Students.Add(s4);
+
+        DisplayCourse(Math);
+        DisplayCourseStudents(Info);
+        DisplayCourse(Eng);
+        DisplayCourseStudents(Hist);
     }
 }
