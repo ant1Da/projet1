@@ -6,7 +6,8 @@ using System.Security.Cryptography;
 namespace Projet_1;
 class Student 
 {
-    public int id {get; set;}
+    private static int nextId {get; set;}
+    private int id {get; set;}
     public string name {get; set;}
     public float average {get; set;}
     public bool isScholarshipHolder {get; set;}
@@ -15,14 +16,20 @@ class Student
     {
         this.name = name;
         this.average = average;
-        id++;
+        nextId++;
+        id = nextId;
     }
     public Student(string name, float average, bool isScholarshipHolder)
     {
         this.name = name;
         this.average = average;
         this.isScholarshipHolder = isScholarshipHolder;
-        id++;
+        nextId++;
+        id = nextId;
+    }
+    public int getId()
+    {
+        return id;
     }
 }
 class Course
@@ -53,7 +60,7 @@ class Program
     {
         static void DisplayStudent(Student s)
         {
-            Console.WriteLine($"Nom : {s.name} | Moyenne : {s.average} | Boursier : {s.isScholarshipHolder}");
+            Console.WriteLine($"Id : {s.getId()} | Nom : {s.name} | Moyenne : {s.average} | Boursier : {s.isScholarshipHolder}");
         }
 
         static void DisplayStudents(List<Student> Liste)
@@ -156,5 +163,10 @@ class Program
         DisplayScholarship(ListeEleves);
         Console.WriteLine("Au dessus de 15");
         DisplayAboveFifteen(ListeEleves);
+
+        Math.Students.Remove(s1);
+        DisplayCourseStudents(Math);
+
+        DisplayStudents(ListeEleves);
     }
 }
