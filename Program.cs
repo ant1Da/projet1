@@ -63,6 +63,26 @@ class Program
                 DisplayStudent(s);
             }
         }
+        static void DisplayScholarship(List<Student> students)
+        {
+            foreach (Student s in students)
+            {
+                if (s.isScholarshipHolder)
+                {
+                    DisplayStudent(s);
+                }
+            }
+        }
+        static void DisplayAboveFifteen(List<Student> students)
+        {
+            foreach (Student s in students)
+            {
+                if (s.average >= 15)
+                {
+                    DisplayStudent(s);
+                }
+            }
+        }
         Student s1 = new Student("Alice", 12, true);
         Student s2 = new Student("Bernard", 11, false);
         Student s3 = new Student("Emma", 18, true);
@@ -95,12 +115,27 @@ class Program
             DisplayStudents(c.Students);
             Console.WriteLine("\n");
         }
+        static void DisplayMandatoryCourses(List<Course> listCourses)
+        {
+            foreach (Course c in listCourses)
+            {
+                if (c.isMandatory)
+                {
+                    DisplayCourse(c);
+                }
+            }
+        }
 
-        List<Student> ElevesCourse = new List<Student>();
         Course Math = new Course("Mathématiques", 3, true, new List<Student>());
         Course Info = new Course("Informatique", 5, false, new List<Student>());
         Course Eng = new Course("Anglais", 1, false, new List<Student>());
         Course Hist = new Course("Histoire", 1, false, new List<Student>());
+
+        List<Course> listCourses = new List<Course>();
+        listCourses.Add(Math);
+        listCourses.Add(Info);
+        listCourses.Add(Eng);
+        listCourses.Add(Hist);
 
         Math.Students.Add(s1);
         Math.Students.Add(s2);
@@ -115,5 +150,11 @@ class Program
         DisplayCourseStudents(Info);
         DisplayCourse(Eng);
         DisplayCourseStudents(Hist);
+
+        DisplayMandatoryCourses(listCourses);
+        Console.WriteLine("Boursiers");
+        DisplayScholarship(ListeEleves);
+        Console.WriteLine("Au dessus de 15");
+        DisplayAboveFifteen(ListeEleves);
     }
 }
